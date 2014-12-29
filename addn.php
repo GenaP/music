@@ -3,7 +3,7 @@ session_start();
 include "mysql_connect.php";
 $title=$_REQUEST['title'];
 $text=$_REQUEST['text'];
-$date=date("Y-m-d");
+$date=date("d-m-Y");
 $author=$_SESSION['user_nick'];
 if ($title == "")
 {

@@ -7,7 +7,6 @@ include "mysql_connect.php";
   <head>
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
    <title>We are here to make some photo</title>
-	<link rel="SHORTCUT ICON" href="logo.jpg"/>
 	<link rel="stylesheet" type="text/css" href="style.css"/>
   </head>
   <body>
@@ -26,7 +25,7 @@ include "mysql_connect.php";
 	 ';
 	 }
 	else {
-  echo "<div class='log-in'>Hello, ".$_SESSION['user_nick']."  |  |  <a href='logout.php'>Logout</a></div>";
+  echo '<div class=log-in>Hello, <a href="profile.php?member='.$_SESSION['user_nick'].'">'".$_SESSION['user_nick']"'</a>  |  |  <a href="logout.php">Logout</a></div>';
   }
   ?>
   	<div class="nav"><a href="index.php">Main page</a><br/><hr/>
@@ -35,17 +34,7 @@ include "mysql_connect.php";
   	</div>
   	<div class="content">
 <?php
-function textFunc( $str, $maxLen )
-	{
-	if ( mb_strlen( $str ) > $maxLen )
-		{
-		preg_match( '/^.{0,'.$maxLen.'} .*?/ui', $str, $match );
-		return $match[0].' ';
-		}
-	else {
-		return $str;
-		}
-	}
+include "textFunc.php";
 $id= !empty($_GET['id']) ? $_GET['id'] : NULL;
 if (!isset ($id))
 {
@@ -54,7 +43,7 @@ try {
 	$query=$db->query("SELECT COUNT(*) as count FROM news");
 	$row=$query->fetch();
 	$count=$row['count'];
-	$articles_per_page=10;
+	$articles_per_page=7;
 	$total_pages=intval(($count-1)/$articles_per_page)+1;
 	$page2left='';
 	$page1left='';
@@ -72,7 +61,7 @@ try {
  	 while($rows = $prepare->fetch(PDO::FETCH_OBJ))
   	{
   		echo '<h3>'.$rows->title.'</h3>--------------------------------------<br/><br/>
-  		Created '.$rows->date.' by '.$rows->author.'<br/><br/>
+  		Created '.$rows->date.' by <a href="profile.php?member='.$rows->author.'">'.$rows->author.'</a><br/><br/>
 		'.textFunc($rows->text,149).'... <br/><br/><a href="index.php?id='.$rows->id.'">Read more</a>';
 		if (isset($_SESSION['user_nick'])) 
 		echo' | <a href="edit-form.php?id='.$rows->id.'">Edit this article</a> | <a href="delete-form.php?id='.$rows->id.'">Delete this article</a><br/><br/>

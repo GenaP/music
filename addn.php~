@@ -28,5 +28,5 @@ $prepare = $db->prepare("SELECT `id` FROM news");
   	catch(Exception $e) {
 	print $e->getMessage();
 }
-echo "<meta http-equiv=refresh content='1; url=index.php?$id'><h1>Insert complete.</h1>";
+echo "<meta http-equiv=refresh content='1; url=index.php?id=$id'><h1>Insert complete.</h1>";
 ?>

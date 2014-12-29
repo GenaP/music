@@ -15,7 +15,11 @@ echo"
 Login<br>
 <input type='text' name='login'><br><br>
 Password<br>
-<input type='password' name='pasw'><br><br>
+<input type='password' name='pasw1'><br><br>
+Confirm password<br>
+<input type='password' name='pasw2'><br><br>
+Email<br>
+<input type='text' name='email'><br><br>
 <input type='submit' value='Register'>
 </form>
 <hr>
