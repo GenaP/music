@@ -1,0 +1,50 @@
+ * {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+  }
+body, html {
+    padding: 3px 3px 3px 3px;
+
+    background-color: #D8DBE2;
+
+    font-family: Verdana, sans-serif;
+    font-size: 12pt;
+    text-align: justify;
+  }
+.main { width: 980px; 
+
+    margin: auto; 
+    position: relative; 
+    background-color: #D8DBE2;
+    margin-top: 10px;
+}
+.nav {
+	width:180px;
+	background-color:brown;
+}
+.content {
+	width:800px;
+	left: 180px;
+	background-color: #146b49;
+	text-align: justify;
+	padding-left: 7px;
+}
+
+ .nav, .content { 
+    position: absolute; 
+    color: #FFF;
+   }
+ .textarea-n {
+ 	
+ 	height:150px;
+ 	width:400px;
+ }
+ h1 {
+ text-align:center;
+ }
+.log-in {
+	margin-left:300px;
+	width:100%;
+	
+	}
+ 	
