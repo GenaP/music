@@ -22,18 +22,24 @@ if ($pasw1!=$pasw2) {
 	echo "Password don't confirmed";
 	exit;
 	}
-	echo $login, $email;
 try {
-$prepare = $db->prepare('SELECT * FROM users WHERE `login`=:login AND `email`=:email');
-$prepare->execute(array(':login'=>$login, ':email'=>$email));
-$rows=$prepare->fetch(PDO::FETCH_OBJ);	
-	if ($rows->login != "") {
-		echo "<meta http-equiv=refresh content='1; url=index.php'> <center><h1><br><br><br><br>Login exist's...</h1></center>";
-		exit;
-	}
-	if ($rows->email != "") {
-		echo "<meta http-equiv=refresh content='1; url=index.php'> <center><h1><br><br><br><br>Email exist's...</h1></center>";
-		exit;
+$prepare= $db->prepare("SELECT * FROM users WHERE `login`=:login");
+$prepare->execute(array(':login'=>$login));
+$rows=$prepare->fetch(PDO::FETCH_OBJ);
+if (!empty($rows->login)==$login) {
+	die("Login exist's");
+}
+}
+catch (Exception $e) {
+	print $e->getMessage();
+}
+try
+{
+$prepare= $db->prepare("SELECT * FROM users WHERE `email`=:email");
+$prepare->execute(array(':email'=>$email));
+$rows=$prepare->fetch(PDO::FETCH_OBJ);
+if (!empty($rows->email)==$email) {
+	die("Email exist's");
 	}
 }
 catch (Exception $e) {

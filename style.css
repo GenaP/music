@@ -72,3 +72,21 @@ body, html {
 	padding-left: 7px;
 	color:white;
 }
+.show{
+	cursor:pointer;
+	background-color:brown;
+	font-size:13px;
+	font-weight:bold;
+	color:white;
+	text-decoration:none;
+	margin-top:5px;
+}
+.no {
+	cursor:pointer;
+	background-color:blue;
+	font-size:13px;
+	font-weight:bold;
+	color:white;
+	text-decoration:none;
+	margin-top:5px;
+}

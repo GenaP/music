@@ -1,0 +1,21 @@
+<?php 
+session_start();
+include "mysql_connect.php";
+if (!isset($_GET['del'])) {
+	echo"<meta http-equiv=refresh content='1; url=index.php'>";
+	}
+	else
+	{
+		$del=$_GET['del'];
+		echo $del;
+		try {
+		$prepare=$db->prepare("DELETE FROM `test`.`users` WHERE `users`.`login` LIKE '$del'");
+		$prepare->execute();
+		}
+		catch(Exception $e) {
+	print $e->getMessage();
+}
+session_destroy();
+echo "<meta http-equiv=refresh content='100; url=index.php'><h2> User deleted </h2>";
+}
+?>		

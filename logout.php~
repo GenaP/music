@@ -3,5 +3,5 @@ session_start();
 unset($_SESSION['user_id']);
 unset($_SESSION['user_nick']);
 session_destroy();
-echo'<center><h1>Logout complete</h1>';
+echo"<meta http-equiv=refresh content='1; url=index.php'><center><h1>Logout complete</h1>";
 ?>

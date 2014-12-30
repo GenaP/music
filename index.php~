@@ -1,6 +1,8 @@
 <?php
 session_start();
 include "mysql_connect.php";
+$user=!empty($_SESSION['user_nick']) ? $_SESSION['user_nick']:NULL;
+$status=!empty($_SESSION['user_status']) ? $_SESSION['user_nick']:NULL;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -25,12 +27,13 @@ include "mysql_connect.php";
 	 ';
 	 }
 	else {
-  echo '<div class=log-in>Hello, <a href="profile.php?member='.$_SESSION['user_nick'].'">'".$_SESSION['user_nick']"'</a>  |  |  <a href="logout.php">Logout</a></div>';
+  echo '<div class=log-in>Hello, <a href="profile.php?member='.$_SESSION['user_nick'].'">'.$_SESSION['user_nick'].'</a>  |  |  <a href="logout.php">Logout</a></div>';
   }
   ?>
   	<div class="nav"><a href="index.php">Main page</a><br/><hr/>
   	<a href="reg.php" target="_blank">Register</a><hr/>
   	<a href="addnews.php" target="_blank">Add news</a><hr/>
+  	<?php if ($status=='admin'){echo'<a href="users.php">User list</a>';}?>
   	</div>
   	<div class="content">
 <?php
@@ -63,7 +66,7 @@ try {
   		echo '<h3>'.$rows->title.'</h3>--------------------------------------<br/><br/>
   		Created '.$rows->date.' by <a href="profile.php?member='.$rows->author.'">'.$rows->author.'</a><br/><br/>
 		'.textFunc($rows->text,149).'... <br/><br/><a href="index.php?id='.$rows->id.'">Read more</a>';
-		if (isset($_SESSION['user_nick'])) 
+		if ($rows->author==$user or $status=='admin') 
 		echo' | <a href="edit-form.php?id='.$rows->id.'">Edit this article</a> | <a href="delete-form.php?id='.$rows->id.'">Delete this article</a><br/><br/>
 		';
 		echo' <hr/>';
