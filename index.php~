@@ -2,7 +2,7 @@
 session_start();
 include "mysql_connect.php";
 $user=!empty($_SESSION['user_nick']) ? $_SESSION['user_nick']:NULL;
-$status=!empty($_SESSION['user_status']) ? $_SESSION['user_nick']:NULL;
+$status=!empty($_SESSION['user_status']) ? $_SESSION['user_status']:NULL;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -66,7 +66,7 @@ try {
   		echo '<h3>'.$rows->title.'</h3>--------------------------------------<br/><br/>
   		Created '.$rows->date.' by <a href="profile.php?member='.$rows->author.'">'.$rows->author.'</a><br/><br/>
 		'.textFunc($rows->text,149).'... <br/><br/><a href="index.php?id='.$rows->id.'">Read more</a>';
-		if ($rows->author==$user or $status=='admin') 
+		if ($status=='editor' or $status=='admin') 
 		echo' | <a href="edit-form.php?id='.$rows->id.'">Edit this article</a> | <a href="delete-form.php?id='.$rows->id.'">Delete this article</a><br/><br/>
 		';
 		echo' <hr/>';

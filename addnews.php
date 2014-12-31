@@ -3,13 +3,11 @@ ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 session_start();
-if (!isset($_SESSION['user_nick'])) {
-	echo" <meta http-equiv=refresh content='2; url=reg.php'><h1>Register, please...</h1>";
-	exit;
-	}
-    else {
-echo"
-<!DOCTYPE html>
+include "mysql_connect.php";
+$user=!empty($_SESSION['user_nick']) ? $_SESSION['user_nick']:NULL;
+$status=!empty($_SESSION['user_status']) ? $_SESSION['user_status']:"user";
+echo $status;
+$edit="<!DOCTYPE html>
 <html>
 <head>
 <meta charset='utf-8' />
@@ -28,5 +26,18 @@ Text<br>
 <hr>
 </body>
 </html>";
-}
+if (!isset($_SESSION['user_nick'])) {
+	echo" <meta http-equiv=refresh content='2; url=reg.php'><h1>Register, please...</h1>";
+	exit;
+	}
+	switch ($status) {
+	case"editor":
+	echo  $edit;
+	break;
+	case"admin": 
+	echo $edit;
+	break;
+	default:
+		echo"You don't have perm...";
+	}
 ?>

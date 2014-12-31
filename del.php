@@ -3,9 +3,12 @@ session_start();
 include "mysql_connect.php";
 if (!isset($_GET['del'])) {
 	echo"<meta http-equiv=refresh content='1; url=index.php'>";
+	exit;
 	}
-	else
-	{
+if (!isset($_SESSION['status']) or $_SESSION!="admin") {
+	 echo"<meta http-equiv=refresh content='1; url=index.php'>";
+	exit;
+	}
 		$del=$_GET['del'];
 		echo $del;
 		try {
@@ -15,7 +18,6 @@ if (!isset($_GET['del'])) {
 		catch(Exception $e) {
 	print $e->getMessage();
 }
-session_destroy();
 echo "<meta http-equiv=refresh content='1; url=index.php'><h2> User deleted </h2>";
 }
 ?>		

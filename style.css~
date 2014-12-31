@@ -75,7 +75,7 @@ body, html {
 .show{
 	cursor:pointer;
 	background-color:brown;
-	font-size:13px;
+	font-size:14px;
 	font-weight:bold;
 	color:white;
 	text-decoration:none;
@@ -83,10 +83,34 @@ body, html {
 }
 .no {
 	cursor:pointer;
-	background-color:darkgreen;
+	background-color:blue;
 	font-size:13px;
 	font-weight:bold;
 	color:white;
 	text-decoration:none;
 	margin-top:5px;
 }
+.edit_b {
+	cursor:pointer;
+	background-color:#079da2;
+	font-size:14px;
+	font-weight:bold;
+	color:white;
+	text-decoration:none;
+	margin-top:5px;
+}
+.ban_b{
+	cursor:pointer;
+	background-color:black;
+	font-size:14px;
+	font-weight:bold;
+	color:white;
+	text-decoration:none;
+	margin-top:5px;
+}
+.edit{
+	background-color:#4623a0;
+	position:absolute;
+	border:1px white solid;
+	padding:2px;
+}	

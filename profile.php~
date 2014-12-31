@@ -2,7 +2,7 @@
 session_start();
 include "mysql_connect.php";
 include "textFunc.php";
-$member=$_GET['member'];
+$member=!empty($_GET['member']) ? $_GET['member']:NULL;
 $user=!empty($_SESSION['user_nick']) ? $_SESSION['user_nick']:NULL;
 try {
 	$prepare=$db->prepare ("SELECT * FROM `users` WHERE `login` =:member");
@@ -12,7 +12,6 @@ try {
   echo "<meta http-equiv=refresh content='1; url=index.php'> <center><h1><br><br><br><br>User don't exist...</h1></center>";
   exit;}
 $member=$rows->login;
-$banned=$rows->banned;
 $cause=$rows->cause;
 $email=$rows->email;
 $status=$rows->status;
@@ -47,10 +46,58 @@ catch(Exception $e) {
 	   			   Date of registration: <?php echo $reg_date; ?><br/>
 	   			   <?php if (isset($_SESSION['user_nick'])) {echo"E-mail: $email<br/>";}?>
 	   			   Last visit: <?php echo $last_date;?><br/><hr/>
-	   			  <?php if ($user==$member) {echo"<a class=show onclick=javascript:showElement('order-p')>Delete my profile</a><br>
+	   			  <?php if ($user==$member) {echo"<a class=edit_b onclick=javascript:showElement('edit')> Edit my profile</a><br>
+		<div id=edit class=edit style=display:none; float:none;text-decoration:none;>editing..........<a class=edit_b onclick=javascript:showElement('edit')>close</a> <br/>
+	<form name=delete action=editu.php method=post>
+	Login:<br/>
+	<textarea name=login>$member</textarea>
+	<br/>
+	Name:<br/>
+	<textarea name=name>$name</textarea><br/>
+	Surname:<br/>
+	<textarea name=surname>$surname</textarea><br/>
+	Email:<br/>
+	<textarea name=email>$email</textarea><br/>
+	<input type=hidden name=id value=$rows->id><hr/><center>
+        <input type=submit value= Edit style=margin-top:6px;></center>
+	</form></div>
+	   			  <a class=show onclick=javascript:showElement('order-p')>Delete my profile</a><br>
 	<div id=order-p class=order-p style=display:none; float:none;text-decoration:none;>Are you sure?<br/>
 	<form name=delete action=del.php>
-	<a class=show href='del.php?del=yes'>Yes :(</a> | <a class=no onclick=javascript:showElement('order-p')>No :)</a></form></div>";}?>
+	<a class=show href='del.php?del=$user'>Yes :(</a> | <a class=no onclick=javascript:showElement('order-p')>No :)</a></form></div>";}
+	
+	if ($status="admin" and $user!=$member and $user!=NULL) {
+		echo"<a class=edit_b onclick=javascript:showElement('edit')> Edit this profile</a><br>
+		<div id=edit class=edit style=display:none; float:none;text-decoration:none;>editing..........<a class=edit_b onclick=javascript:showElement('edit')>close</a> <br/>
+	<form name=delete action=editu.php method=post>
+	Login:<br/>
+	<textarea name=login>$member</textarea>
+	<br/>
+	Name:<br/>
+	<textarea name=name>$name</textarea><br/>
+	Surname:<br/>
+	<textarea name=surname>$surname</textarea><br/>
+	Email:<br/>
+	<textarea name=email>$email</textarea><br/>
+	Status: <select name='status[]'>
+    <option selected disabled>$status</option>
+    <option value=admin>admin</option>
+    <option value=editor>editor</option>
+    <option value=user>user</option>
+   </select><br/>
+   <input type=hidden name=id value=$rows->id><hr/><center>
+   <input type=submit value= Edit style=margin-top:6px;></center>
+   
+	</form></div>
+		<a class=show onclick=javascript:showElement('order-p')>Delete this profile</a><br>
+	<div id=order-p class=order-p style=display:none; float:none;text-decoration:none;>Are you sure?<br/>
+	<form name=delete action=del.php>
+	<a class=show href='del.php?del=$user'>Yes :(</a> | <a class=no onclick=javascript:showElement('order-p')>No :)</a></form></div>
+	<a class=ban_b onclick=javascript:showElement('ban')> Ban this user</a><br>
+	<div id=ban class=ban style=display:none; float:none;text-decoration:none;>Are you ban?<br/>
+	<form name=delete action=del.php>
+	<a class=show href=''>Yes</a> | <a class=no onclick=javascript:showElement('ban')>No</a></form></div>";}
+	?>
 
 
 </div><hr/><br/><h2><i>Articles of this user</i></h2><br/>
@@ -107,7 +154,7 @@ function showElement(layer){
 var myLayer = document.getElementById(layer);
 if(myLayer.style.display=="none"){
  myLayer.style.display="block";
- myLayer.backgroundPosition="bottom";
+ myLayer.backgroundPosition="absolute";
  } else { 
  myLayer.style.display="none";
  }
