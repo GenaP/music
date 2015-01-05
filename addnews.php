@@ -17,10 +17,14 @@ $edit="<!DOCTYPE html>
 <body>
 <h2> Add news</h2><br><hr>
 <form name='pass' method='post' action='addn.php' >
-Title<br>
-<input type='text' name='title'value=Enter><br><br>
-Text<br>
-<textarea name='text' class=textarea-n>Enter your text</textarea><br>
+Title English<br>
+<input type='text' name='eng_title'value=Enter><br><br>
+Text English<br>
+<textarea name='eng_text' class=textarea-n>Enter your text</textarea><br>
+Title Ukr<br>
+<input type='text' name='ukr_title'value=Введіть><br><br>
+Text Ukr<br>
+<textarea name='ukr_text' class=textarea-n>Нічого не пише))</textarea><br>
 <input type='submit' value='Add'>
 </form>
 <hr>

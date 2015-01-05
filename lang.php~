@@ -1,0 +1,10 @@
+<?php 
+switch (!empty($_GET['lang']) ? $_GET['lang']:NULL):
+  default : include "eng.php";
+   break;
+  case "ukr" : include "ukr.php";
+   break;
+  case "eng" : include "eng.php";
+   break;
+endswitch;
+?>

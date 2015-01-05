@@ -4,6 +4,7 @@ include "mysql_connect.php";
 include "textFunc.php";
 $member=!empty($_GET['member']) ? $_GET['member']:NULL;
 $user=!empty($_SESSION['user_nick']) ? $_SESSION['user_nick']:NULL;
+$user_status=!empty($_SESSION['user_status']) ? $_SESSION['user_status']:NULL;
 try {
 	$prepare=$db->prepare ("SELECT * FROM `users` WHERE `login` =:member");
 	$prepare->execute(array(':member' => $member));
@@ -34,22 +35,29 @@ catch(Exception $e) {
   </head>
   <body>
 <h1>Profile page | <a href="index.php">Back to site</a> </h1> 
+<center> <a href="<?php echo $_SERVER['PHP_SELF']?>?lang=ukr">ukr</a> | <a href="<?php echo $_SERVER['PHP_SELF']?>?lang=eng">eng</a></center>
   <hr/>
 <div class="main">
 	<div class="user_content">
 	   <div class="ava-block"><center><b><?php echo $member;?></b><?php if ($user==$member) {echo "(it's
 	   you)";}?></center>
-		<img src="<?php echo $avatar;?>"  alt="no avatar" class="ava"/>
+		<img src="<?php echo $avatar;?>"  alt="no avatar" class="ava"/><br/>
+		<?php if ($user==$member) 
+		{echo 'change avatar<br/>
+		<form action=imgupload.php method=post enctype=multipart/form-data>
+			<input type="FILE" name="imgupload">
+			<input type=submit value=Upload>
+		</form>';}?>
 	   </div><br/>
-	   <div class="user_info"> Name: <?php echo "".$name." ".$surname."";?><br/>
-	   			   Status: <?php echo $status;?><br/> 
-	   			   Date of registration: <?php echo $reg_date; ?><br/>
+	   <div class="user_info"> <?=$lang['name']?>: <?php echo "".$name." ".$surname."";?><br/>
+	   			   <?=$lang['status']?>: <?php echo $status;?><br/> 
+	   			   <?=$lang['date_of_reg']?>: <?php echo $reg_date; ?><br/>
 	   			   <?php if (isset($_SESSION['user_nick'])) {echo"E-mail: $email<br/>";}?>
 	   			   Last visit: <?php echo $last_date;?><br/><hr/>
 	   			  <?php if ($user==$member) {echo"<a class=edit_b onclick=javascript:showElement('edit')> Edit my profile</a><br>
 		<div id=edit class=edit style=display:none; float:none;text-decoration:none;>editing..........<a class=edit_b onclick=javascript:showElement('edit')>close</a> <br/>
 	<form name=delete action=editu.php method=post>
-	Login:<br/>
+	Login.:<br/>
 	<textarea name=login>$member</textarea>
 	<br/>
 	Name:<br/>
@@ -66,7 +74,7 @@ catch(Exception $e) {
 	<form name=delete action=del.php>
 	<a class=show href='del.php?del=$user'>Yes :(</a> | <a class=no onclick=javascript:showElement('order-p')>No :)</a></form></div>";}
 	
-	if ($status="admin" and $user!=$member and $user!=NULL) {
+	if ($user=='admin') {
 		echo"<a class=edit_b onclick=javascript:showElement('edit')> Edit this profile</a><br>
 		<div id=edit class=edit style=display:none; float:none;text-decoration:none;>editing..........<a class=edit_b onclick=javascript:showElement('edit')>close</a> <br/>
 	<form name=delete action=editu.php method=post>
@@ -100,7 +108,7 @@ catch(Exception $e) {
 	?>
 
 
-</div><hr/><br/><h2><i>Articles of this user</i></h2><br/>
+</div><br/><br/><hr/><br/><h2><i>Articles of this user</i></h2><br/>
 <?php
 try {
 	$query=$db->query("SELECT COUNT(*) as count FROM news");

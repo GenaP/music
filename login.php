@@ -22,10 +22,10 @@ try {
 	if((empty($rows->login)) || (empty($rows->password))) {
   echo "<meta http-equiv=refresh content='1; url=index.php'> <center><h1><br><br><br><br>Login failed...</h1></center>";
   exit;}
-	echo ''.$rows->login.'';
 $_SESSION['user_id']=$rows->id;
 $_SESSION['user_nick']=$rows->login;
 $_SESSION['user_status']=$rows->status;
+echo $rows->status;
 }
 catch(Exception $e) {
 	print $e->getMessage();

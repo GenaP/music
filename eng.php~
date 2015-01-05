@@ -1,0 +1,5 @@
+<?php 
+	$lang['main_page'] = "Main page";
+	$lang['register'] = "Register";
+	$lang['addnews'] = "Add news";
+?>
