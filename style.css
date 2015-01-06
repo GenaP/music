@@ -5,7 +5,7 @@
 body, html {
     padding: 3px 3px 3px 3px;
 
-    background-color: #4a8cbf;
+    background-color: #06AAE5;
 
     font-family: Verdana, sans-serif;
     font-size: 12pt;
@@ -25,7 +25,7 @@ body, html {
 .content {
 	width:800px;
 	left: 180px;
-	background-color: #146b49;
+	background-color: #026497;
 	text-align: justify;
 	padding-left: 7px;
 }
@@ -74,7 +74,7 @@ body, html {
 }
 .show{
 	cursor:pointer;
-	background-color:brown;
+	background-color:#AB895B;
 	font-size:14px;
 	font-weight:bold;
 	color:white;

@@ -5,6 +5,8 @@ include "textFunc.php";
 $member=!empty($_GET['member']) ? $_GET['member']:NULL;
 $user=!empty($_SESSION['user_nick']) ? $_SESSION['user_nick']:NULL;
 $user_status=!empty($_SESSION['user_status']) ? $_SESSION['user_status']:NULL;
+$user_lang=$_SESSION['user_lang']; 
+
 try {
 	$prepare=$db->prepare ("SELECT * FROM `users` WHERE `login` =:member");
 	$prepare->execute(array(':member' => $member));
@@ -35,7 +37,7 @@ catch(Exception $e) {
   </head>
   <body>
 <h1>Profile page | <a href="index.php">Back to site</a> </h1> 
-<center> <a href="<?php echo $_SERVER['PHP_SELF']?>?lang=ukr">ukr</a> | <a href="<?php echo $_SERVER['PHP_SELF']?>?lang=eng">eng</a></center>
+<center> <a href="<?php echo $_SERVER['PHP_SELF']?>?lang=ukr&member=<?php echo $member?>">ukr</a> | <a href="<?php echo $_SERVER['PHP_SELF']?>?lang=eng&member=<?php echo $member?>">eng</a></center>
   <hr/>
 <div class="main">
 	<div class="user_content">
@@ -53,8 +55,8 @@ catch(Exception $e) {
 	   			   <?=$lang['status']?>: <?php echo $status;?><br/> 
 	   			   <?=$lang['date_of_reg']?>: <?php echo $reg_date; ?><br/>
 	   			   <?php if (isset($_SESSION['user_nick'])) {echo"E-mail: $email<br/>";}?>
-	   			   Last visit: <?php echo $last_date;?><br/><hr/>
-	   			  <?php if ($user==$member) {echo"<a class=edit_b onclick=javascript:showElement('edit')> Edit my profile</a><br>
+	   			   <?=$lang['last_visit']?>: <?php echo $last_date;?><br/><hr/>
+	   			  <?php if ($user==$member) {echo"<a class=edit_b onclick=javascript:showElement('edit')> ".$lang['edit_my_profile']."</a><br>
 		<div id=edit class=edit style=display:none; float:none;text-decoration:none;>editing..........<a class=edit_b onclick=javascript:showElement('edit')>close</a> <br/>
 	<form name=delete action=editu.php method=post>
 	Login.:<br/>
@@ -69,12 +71,12 @@ catch(Exception $e) {
 	<input type=hidden name=id value=$rows->id><hr/><center>
         <input type=submit value= Edit style=margin-top:6px;></center>
 	</form></div>
-	   			  <a class=show onclick=javascript:showElement('order-p')>Delete my profile</a><br>
+	   			  <a class=show onclick=javascript:showElement('order-p')>".$lang['delete_my_profile']."</a><br>
 	<div id=order-p class=order-p style=display:none; float:none;text-decoration:none;>Are you sure?<br/>
 	<form name=delete action=del.php>
 	<a class=show href='del.php?del=$user'>Yes :(</a> | <a class=no onclick=javascript:showElement('order-p')>No :)</a></form></div>";}
 	
-	if ($user=='admin') {
+	if ($user=='admin' and $user!==$member) {
 		echo"<a class=edit_b onclick=javascript:showElement('edit')> Edit this profile</a><br>
 		<div id=edit class=edit style=display:none; float:none;text-decoration:none;>editing..........<a class=edit_b onclick=javascript:showElement('edit')>close</a> <br/>
 	<form name=delete action=editu.php method=post>
@@ -131,9 +133,9 @@ try {
 	$prepare->execute(array(':member' => $member));
 	$output = array();
 	while ($rows=$prepare->fetch(PDO::FETCH_OBJ)) {
-		$output[$rows->id] = '<h3>'.$rows->title.'</h3>--------------------------------------<br/><br/>
+		$output[$rows->id] = '<h3>'.$rows->{"{$user_lang}.title"}.'</h3>--------------------------------------<br/><br/>
 	  		Created '.$rows->date.' by <a href="profile.php?member='.$rows->author.'">'.$rows->author.'</a><br/><br/>
-			'.textFunc($rows->text,149).'... <br/><br/><a href="index.php?id='.$rows->id.'">Read more</a>';
+			'.textFunc($rows->{"{$user_lang}.text"},149).'... <br/><br/><a href="index.php?id='.$rows->id.'">Read more</a>';
 			
 		if ($user==$member or $user=='admin')  {
 			$output[$rows->id] .= ' | <a href="edit-form.php?id='.$rows->id.'">Edit this article</a> | <a href="delete-form.php?id='.$rows->id.'">Delete this article</a><br/><br/>';}

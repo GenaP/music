@@ -20,5 +20,5 @@ catch(PDOException $e)
 {
 	die("Error: ".$e->getMessage());
 }
-
+include $_SESSION['user_lang'].".php";
 ?>

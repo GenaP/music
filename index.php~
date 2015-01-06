@@ -3,8 +3,7 @@ session_start();
 include "mysql_connect.php";
 $user = !empty($_SESSION['user_nick']) ? $_SESSION['user_nick']:NULL;
 $user_status=!empty($_SESSION['user_status']) ? $_SESSION['user_status']:NULL;
-$user_lang=$_SESSION['user_lang'];
-echo $user_lang;
+$id = !empty($_GET['id']) ? $_GET['id'] : NULL;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -15,7 +14,13 @@ echo $user_lang;
   </head>
   <body>
 <h1>We are here to make some noise!</h1> 
-<center> <a href="<?php echo $_SERVER['PHP_SELF']?>lang=ukr">ukr</a> | <a href="<?php echo $_SERVER['PHP_SELF']?>?lang=eng">eng</a></center>
+<center> <?php if (isset($id)) {echo '
+<a href="index.php?lang=ukr&id=' . $id . '">ukr</a> | <a href="index.php?lang=eng&id=' . $id . '">eng</a>';}
+if (!isset($id)) {
+echo '<a href="index.php?lang=ukr">ukr</a> | <a href="index.php?lang=eng">eng</a>';
+}
+?>
+</center>
   <hr/>
   
   	<div class="main">
@@ -34,10 +39,12 @@ if (empty($_SESSION['user_nick'])) {
   	'.$_SESSION['user_nick'].'</a>  |  |  <a href="logout.php">Logout</a></div>';
   }
   ?>
-  	<div class="nav"><a href="index.php"><?=$lang['main_page']?></a><br/><hr/>
+  	<div class="nav"><a href="index.php?lang=<?php echo $user_lang;?>"><?=$lang['main_page']?></a><br/><hr/>
   	<a href="reg.php" target="_blank"><?=$lang['register']?></a><hr/>
   	<a href="addnews.php" target="_blank"><?=$lang['addnews']?></a><hr/>
-  	<?php if ($user_status == 'admin'){ echo '<a href="users.php">User list</a>';} ?>
+  	<?php if ($user_status == 'admin'){ echo '<a href="users.php">'.$lang['user_list'].'</a><hr/>';} ?>
+  	<?php if ($user_status == 'admin'){ echo '<a href="translate.php?tr=ukr">'.$lang['edit_lang_ukr'].'</a><hr/>';} ?>
+  	<?php if ($user_status == 'admin'){ echo '<a href="users.php?tr=eng">'.$lang['edit_lang_eng'].'</a><hr/>';} ?>
   	</div>
   	<div class="content">
 <?php

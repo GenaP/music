@@ -3,7 +3,7 @@ ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 session_start();
-echo"
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +11,7 @@ echo"
 <title>Register form</title>
 </head>
 <body>
-<form name='pass' method='post' action='r.php' >
+<form name='pass' method='post' action='r.php' onsubmit="check">
 Login<br>
 <input type='text' name='login'><br><br>
 Password<br>
@@ -24,5 +24,11 @@ Email<br>
 </form>
 <hr>
 </body>
-</html>";
-?>
+</html>
+<script type=javascript>
+function check
+var r = /^\w+@\w+\.\w{2,4}$/i;
+if (!r.test(document.pass.email.value) {
+    alert('Wrong email!')
+}
+</script>
